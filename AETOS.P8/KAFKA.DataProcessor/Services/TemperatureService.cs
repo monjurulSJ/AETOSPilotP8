@@ -1,6 +1,6 @@
 ﻿using KAFKA.DataProcessor.Models;
-using KAFKA.DataProcessor.Repositories;
 using Newtonsoft.Json;
+using P8.Repository.Repositories;
 
 namespace KAFKA.DataProcessor.Services
 {

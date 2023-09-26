@@ -8,8 +8,17 @@ namespace MQTT.DataProcessor.Models
 {
     public class Temperature
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string id { get; set; }
+        public string temp { get; set; }
+        public string psi { get; set; }
+        public string timestamp { get; set; }
+    }
+
+    public class Geo
+    {
+        public string id { get; set; }
+        public string longtd { get; set; }
+        public string lat { get; set; }
+
     }
 }
