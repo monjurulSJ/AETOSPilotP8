@@ -1,9 +1,9 @@
 ﻿using Confluent.Kafka;
 using Kafka.Library;
-using KAFKA.DataProcessor.Models;
 using KAFKA.Library;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using P8.Model.Models;
 using P8.Repository.Repositories;
 
 namespace KAFKA.DataProcessor.Services

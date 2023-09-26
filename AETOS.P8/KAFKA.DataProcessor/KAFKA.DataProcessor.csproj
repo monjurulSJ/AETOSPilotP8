@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\KAFKA.Library\KAFKA.Library.csproj" />
+    <ProjectReference Include="..\P8.Model\P8.Model.csproj" />
     <ProjectReference Include="..\P8.Repositories\P8.Repository.csproj" />
   </ItemGroup>
 
