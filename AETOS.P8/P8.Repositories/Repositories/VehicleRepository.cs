@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace KAFKA.DataProcessor.Repositories
+namespace P8.Repository.Repositories
 {
     public interface IVehicleRepository
     {

@@ -1,10 +1,9 @@
 ﻿using Kafka.Library;
 using KAFKA.DataProcessor.Connectors;
 using KAFKA.DataProcessor.Pipeline;
-using KAFKA.DataProcessor.Repositories;
 using KAFKA.DataProcessor.Services;
 using Microsoft.Extensions.DependencyInjection;
-
+using P8.Repository.Repositories;
 
 namespace KAFKA.DataProcessor.Extentions
 {
