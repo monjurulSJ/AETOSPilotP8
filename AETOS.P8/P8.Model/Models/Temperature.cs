@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MQTT.DataProcessor.Models
+namespace P8.Model.Models
 {
     public class Temperature
     {

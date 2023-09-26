@@ -2,9 +2,9 @@
 using Kafka.Library;
 using KAFKA.Library;
 using Microsoft.Extensions.Configuration;
-using MQTT.DataProcessor.Models;
 using MQTT.DataProcessor.Repositories;
 using Newtonsoft.Json;
+using P8.Model.Models;
 
 namespace MQTT.DataProcessor.Services
 {

@@ -1,4 +1,4 @@
-﻿namespace KAFKA.DataProcessor.Models
+﻿namespace P8.Model.Models
 {
     public class Vehicle
     {
