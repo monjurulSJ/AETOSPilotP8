@@ -28,5 +28,6 @@ namespace P8.Model.Models
         public int Reason { get; set; }
         public int GroupID { get; set; }
         public string GroupName { get; set; }
+        public DateTime CreatedAt { get; set; }
     } 
 }
