@@ -11,7 +11,6 @@ namespace MQTT.DataProcessor.Pipeline
         private string _topicName;
         private string _deviceId;
         public ITopicService TopicService { get; private set; }
-
         private readonly IExtractService _extractService;
 
         public DataPipeline(IExtractService extractService)

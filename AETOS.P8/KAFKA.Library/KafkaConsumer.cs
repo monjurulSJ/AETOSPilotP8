@@ -20,7 +20,7 @@ namespace Kafka.Library
                 BootstrapServers = bootstrapServers,
                 GroupId = groupId,
                 AutoOffsetReset = AutoOffsetReset.Earliest,
-                EnableAutoCommit = false
+                EnableAutoCommit = true
             };
 
             _consumer = new ConsumerBuilder<string, string>(config).Build();
@@ -36,9 +36,7 @@ namespace Kafka.Library
                 try
                 {
                     var cr = _consumer.Consume(token);
-                    
                     msgHandler(cr.Message,cr.Topic);
-
                 }
 
                 catch (Exception ex)
