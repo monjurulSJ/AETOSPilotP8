@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Confluent.Kafka" Version="2.2.0" />
-    <PackageReference Include="MQTTnet" Version="3.1.2" />
+    <ProjectReference Include="..\P8.Model\P8.Model.csproj" />
+    <ProjectReference Include="..\P8.Repositories\P8.Repository.csproj" />
   </ItemGroup>
 
 </Project>
