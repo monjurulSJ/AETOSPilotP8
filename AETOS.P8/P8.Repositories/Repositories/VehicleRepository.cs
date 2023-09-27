@@ -15,53 +15,48 @@ namespace P8.Repository.Repositories
 
     public class VehicleRepository : BaseRepository, IVehicleRepository
     {
-        private readonly AppDbContext _appDbContext;
-        public VehicleRepository(IServiceScopeFactory serviceScopeFactory, AppDbContext appDbContext) : base(serviceScopeFactory)
+        public VehicleRepository(IServiceScopeFactory serviceScopeFactory)
+            : base(serviceScopeFactory)
         {
-            _appDbContext = appDbContext;
+
         }
         public async Task<IList<Vehicle>> GetVehicles(DateTime startTime, DateTime endTime, int speed)
         {
-            var vehicles = await _appDbContext.Vehicles.Where(a => DateTime.Parse(a.Timestamp) <= startTime &&
-                    DateTime.Parse(a.Timestamp) >= endTime && a.Speed == speed).ToListAsync();
+            var appDbContext = GetDbContext();
+
+            var vehicles = await appDbContext.Vehicles.Where(a => a.Timestamp <= startTime &&
+                    a.Timestamp >= endTime && a.Speed == speed).ToListAsync();
 
             return vehicles;
         }
 
         public async Task<List<VehicleTemperature>> GetTemperatures(DateTime targetDate)
         {
+            var appDbContext = GetDbContext();
+
             var vehicleTemperatures = new List<VehicleTemperature>();
 
-            var temperatures = _appDbContext.Temperatures
-                .Select(t => new
-                {
-                    id = t.id,
-                    deviceId = t.DeviceId,
-                    temp = t.temp,
-                    psi = t.psi,
-                    Timestamp = DateTime.Parse(t.timestamp)
-                }).ToList();
+            Console.WriteLine(targetDate.Date);
 
-            var hourlyAverages = temperatures
-                .Where(t => t.Timestamp.Date == targetDate.Date)
-                .GroupBy(t => new { t.deviceId, t.Timestamp.Hour })
+            var temperatures = appDbContext.Temperatures.Where(t => t.timestamp.Date == targetDate.Date)
+                .GroupBy(t => new { t.DeviceId, t.timestamp.Hour })
                 .Select(group => new
                 {
-                    Id = group.Key.deviceId,
-                    Hour = group.Key.Hour,
-                    AverageTemperature = group.Average(r => r.temp)
+                    deviceId = group.Key.DeviceId,
+                    hour = group.Key.Hour,
+                    averageTemperature = group.Average(r => r.temp)
                 })
-                .OrderBy(result => result.Id)
-                .ThenBy(result => result.Hour)
+                .OrderBy(result => result.deviceId)
+                .ThenBy(result => result.hour)
                 .ToList();
-             
+
             var hourlyAveragesDict = new Dictionary<(int Id, int Hour), double>();
 
-            foreach (var result in hourlyAverages)
+            foreach (var result in temperatures)
             {
-                hourlyAveragesDict[(result.Id, result.Hour)] = result.AverageTemperature;
+                hourlyAveragesDict[(result.deviceId, result.hour)] = result.averageTemperature;
             }
-             
+
             foreach (var deviceId in temperatures.Select(t => t.deviceId).Distinct())
             {
                 var temp = new VehicleTemperature
@@ -79,14 +74,13 @@ namespace P8.Repository.Repositories
                     }
                     else
                     {
-                        temp.HourlyAverages[hour] = 0.0;  
+                        temp.HourlyAverages[hour] = 0.0;
                     }
-                }
-
+                } 
                 vehicleTemperatures.Add(temp);
             }
 
             return vehicleTemperatures;
-        } 
+        }
     }
 }

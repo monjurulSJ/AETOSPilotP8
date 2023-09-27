@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using P8.Model.DbContexts;
 
 namespace P8.Repository.Repositories
 {
@@ -17,10 +18,10 @@ namespace P8.Repository.Repositories
             _serviceScope?.Dispose();
         }
 
-        //public AppDbContext GetDbContext()
-        //{
-        //    _serviceScope = _serviceScopeFactory.CreateScope();
-        //    return _serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
-        //}
+        public AppDbContext GetDbContext()
+        {
+            _serviceScope = _serviceScopeFactory.CreateScope();
+            return _serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
+        }
     }
 }

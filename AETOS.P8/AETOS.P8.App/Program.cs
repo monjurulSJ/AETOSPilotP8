@@ -17,8 +17,8 @@ namespace AETOS.P8.App
             builder.Services.AddServices(builder.Configuration);
             // Add services to the container.
             builder.Services.AddDbContext<AppDbContext>(options =>
-            {
-                options.UseSqlServer(connectionString, m => m.MigrationsAssembly(assemblyName));
+            {  
+                options.UseNpgsql(connectionString, m => m.MigrationsAssembly(assemblyName));
             });
 
             builder.Services.AddControllers();

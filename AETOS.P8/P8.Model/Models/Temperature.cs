@@ -12,12 +12,12 @@ namespace P8.Model.Models
         public int DeviceId { get; set; }
         public int temp { get; set; }
         public int psi { get; set; }
-        public string timestamp { get; set; }
+        public DateTime timestamp { get; set; }
     }
 
     public class Geo
     {
-        public string id { get; set; } 
+        public int id { get; set; } 
         public double longitude { get; set; }
         public double latitude { get; set; }
 
