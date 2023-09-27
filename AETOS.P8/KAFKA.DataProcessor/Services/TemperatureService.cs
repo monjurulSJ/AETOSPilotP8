@@ -20,11 +20,14 @@ namespace KAFKA.DataProcessor.Services
 
         public ITopicService Load()
         {
+           
+            _temperatureRepository.add();
+
             // savvve payload to database.
             return this;
         }
 
-        public ITopicService Transform()
+        public ITopicService Transform() // modify payload as like as model
         {
             //other logic here
 

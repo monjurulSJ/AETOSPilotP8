@@ -37,8 +37,6 @@ namespace Kafka.Library
                 {
                     var cr = _consumer.Consume(token);
                     msgHandler(cr.Message,cr.Topic);
-                   
-
                 }
 
                 catch (Exception ex)
