@@ -19,7 +19,7 @@ namespace KAFKA.DataProcessor.Extentions
                     .AddTransient<ITopicFactory, TopicFactory>()
                     .AddTransient<IExtractService, ExtractPayload>()
                     .AddTransient<ITemperatureRepository, TemperatureRepository>()
-                    .AddTransient<IVehicleRepository, VehicleRepository>()
+                    //.AddTransient<IVehicleRepository, VehicleRepository>()
                     ;
         }
     }

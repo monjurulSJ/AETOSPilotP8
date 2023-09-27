@@ -10,7 +10,8 @@ namespace AETOS.P8.App.Extensions
             return services
                .AddScoped<IAetosService, AetosService>()
                .AddScoped<ITemperatureRepository, TemperatureRepository>()
-               .AddScoped<IVehicleRepository, VehicleRepository>();
+             //  .AddScoped<IVehicleRepository, VehicleRepository>()
+               ;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace P8.Model.Models
         public double Longitude { get; set; }
         public double Altitude { get; set; }
         public string Address { get; set; }
-        public string Timestamp { get; set; }
+        public DateTime Timestamp { get; set; }
         public int Accuracy { get; set; }
         public int Speed { get; set; }
         public int CANSpeed { get; set; }
@@ -27,7 +27,6 @@ namespace P8.Model.Models
         public string Ignition { get; set; }
         public int Reason { get; set; }
         public int GroupID { get; set; }
-        public string GroupName { get; set; }
-
+        public string GroupName { get; set; } 
     } 
 }

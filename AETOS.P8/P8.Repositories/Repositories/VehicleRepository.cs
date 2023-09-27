@@ -14,90 +14,83 @@ namespace P8.Repository.Repositories
         Task<VehicleTemperature> SaveVehicleTemperature(VehicleTemperature vehicleTemperature);
     }
 
-    public class VehicleRepository : BaseRepository, IVehicleRepository
-    {
-        private readonly AppDbContext _appDbContext;
-        public VehicleRepository(IServiceScopeFactory serviceScopeFactory, AppDbContext appDbContext) : base(serviceScopeFactory)
-        {
-            _appDbContext = appDbContext;
-        }
-        public async Task<IList<Vehicle>> GetVehicles(DateTime startTime, DateTime endTime, int speed)
-        {
-            var vehicles = await _appDbContext.Vehicles.
-                             Where(a => DateTime.Parse(a.Timestamp) <= startTime &&
-                             DateTime.Parse(a.Timestamp) >= endTime && a.Speed == speed)
-                            .ToListAsync();
+    //public class VehicleRepository : BaseRepository, IVehicleRepository
+    //{
+    //    public VehicleRepository(IServiceScopeFactory serviceScopeFactory)
+    //        : base(serviceScopeFactory)
+    //    {
 
-            return vehicles;
-        }
-        public async Task<List<VehicleTemperature>> GetTemperatures(DateTime targetDate)
-        {
-            var vehicleTemperatures = new List<VehicleTemperature>();
+    //    }
+    //    public async Task<IList<Vehicle>> GetVehicles(DateTime startTime, DateTime endTime, int speed)
+    //    {
 
-            var temperatures = _appDbContext.Temperatures
-                .Select(t => new
-                {
-                    id = t.id,
-                    deviceId = t.DeviceId,
-                    temp = t.temp,
-                    psi = t.psi,
-                    Timestamp = DateTime.Parse(t.timestamp)
-                }).ToList();
+    //        var appDbContext = GetDbContext();
 
-            var hourlyAverages = temperatures
-                .Where(t => t.Timestamp.Date == targetDate.Date)
-                .GroupBy(t => new { t.deviceId, t.Timestamp.Hour })
-                .Select(group => new
-                {
-                    Id = group.Key.deviceId,
-                    Hour = group.Key.Hour,
-                    AverageTemperature = group.Average(r => r.temp)
-                })
-                .OrderBy(result => result.Id)
-                .ThenBy(result => result.Hour)
-                .ToList();
-             
-            var hourlyAveragesDict = new Dictionary<(int Id, int Hour), double>();
+    //        var vehicles = await appDbContext.Vehicles.Where(a => a.Timestamp <= startTime &&
+    //                a.Timestamp >= endTime && a.Speed == speed).ToListAsync();
 
-            foreach (var result in hourlyAverages)
-            {
-                hourlyAveragesDict[(result.Id, result.Hour)] = result.AverageTemperature;
-            }
-             
-            foreach (var deviceId in temperatures.Select(t => t.deviceId).Distinct())
-            {
-                var temp = new VehicleTemperature
-                {
-                    Id = deviceId,
-                    Date = targetDate.Date,
-                    HourlyAverages = new Dictionary<int, double>()
-                };
+    //        return vehicles;
+    //    }
+    //    //public async Task<List<VehicleTemperature>> GetTemperatures(DateTime targetDate)
+    //    //{
+    //    //    var appDbContext = GetDbContext();
 
-                for (int hour = 0; hour < 24; hour++)
-                {
-                    if (hourlyAveragesDict.TryGetValue((deviceId, hour), out double average))
-                    {
-                        temp.HourlyAverages[hour] = average;
-                    }
-                    else
-                    {
-                        temp.HourlyAverages[hour] = 0.0;  
-                    }
-                }
+    //    //    var vehicleTemperatures = new List<VehicleTemperature>();
 
-                vehicleTemperatures.Add(temp);
-            }
+    //    //    Console.WriteLine(targetDate.Date);
 
-            return vehicleTemperatures;
-        }
+    //    //    var temperatures = appDbContext.Temperatures.Where(t => t.timestamp.Date == targetDate.Date)
+    //    //        .GroupBy(t => new { t.DeviceId, t.timestamp.Hour })
+    //    //        .Select(group => new
+    //    //        {
+    //    //            deviceId = group.Key.DeviceId,
+    //    //            hour = group.Key.Hour,
+    //    //            averageTemperature = group.Average(r => r.temp)
+    //    //        })
+    //    //        .OrderBy(result => result.deviceId)
+    //    //        .ThenBy(result => result.hour)
+    //    //        .ToList();
+
+    //    //    var hourlyAveragesDict = new Dictionary<(int Id, int Hour), double>();
+
+    //    //    foreach (var result in temperatures)
+    //    //    {
+    //    //        hourlyAveragesDict[(result.deviceId, result.hour)] = result.averageTemperature;
+    //    //    }
+
+    //    //    foreach (var deviceId in temperatures.Select(t => t.deviceId).Distinct())
+    //    //    {
+    //    //        var temp = new VehicleTemperature
+    //    //        {
+    //    //            Id = deviceId,
+    //    //            Date = targetDate.Date,
+    //    //            HourlyAverages = new Dictionary<int, double>()
+    //    //        };
+
+    //    //        for (int hour = 0; hour < 24; hour++)
+    //    //        {
+    //    //            if (hourlyAveragesDict.TryGetValue((deviceId, hour), out double average))
+    //    //            {
+    //    //                temp.HourlyAverages[hour] = average;
+    //    //            }
+    //    //            else
+    //    //            {
+    //    //                temp.HourlyAverages[hour] = 0.0;
+    //    //            }
+    //    //        } 
+    //    //        vehicleTemperatures.Add(temp);
+    //    //    }
+
+    //    //    return vehicleTemperatures;
+    //    //}
       
-        public async Task<VehicleTemperature> SaveVehicleTemperature(VehicleTemperature vehicleTemperature)
-        {
-            var db = GetDbContext();
+    //    public async Task<VehicleTemperature> SaveVehicleTemperature(VehicleTemperature vehicleTemperature)
+    //    {
+    //        var db = GetDbContext();
 
-            await db.AddAsync(vehicleTemperature);
+    //        await db.AddAsync(vehicleTemperature);
 
-            return vehicleTemperature;
-        }
-    }
+    //        return vehicleTemperature;
+    //    }
+    //}
 }
