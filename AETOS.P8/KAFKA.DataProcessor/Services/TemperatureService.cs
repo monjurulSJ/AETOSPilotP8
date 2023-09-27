@@ -20,7 +20,7 @@ namespace KAFKA.DataProcessor.Services
 
         public ITopicService Load()
         {
-
+            // savvve payload to database.
             return this;
         }
 

@@ -33,7 +33,7 @@ namespace MQTT.DataProcessor.Services
 
             _kafkaProducer.Setup(kAFKASettings.BootstrapServers, kAFKASettings.GroupId);
             var data = JsonConvert.SerializeObject(_temperaturePayload);
-            _kafkaProducer.Produce("temperature", "abdsfdsfd");
+            _kafkaProducer.Produce("temperature", data);
 
             return this;
         }
