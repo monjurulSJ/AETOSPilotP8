@@ -11,88 +11,7 @@ namespace P8.Repository.Repositories
     {
         Task<IList<Vehicle>> GetVehicles(DateTime startTime, DateTime endTime, int speed);
         Task<List<VehicleTemperature>> GetTemperatures(DateTime targetDate);
-        Task<VehicleTemperature> SaveVehicleTemperature(VehicleTemperature vehicleTemperature);
     }
-
-    //public class VehicleRepository : BaseRepository, IVehicleRepository
-    //{
-    //    public VehicleRepository(IServiceScopeFactory serviceScopeFactory)
-    //        : base(serviceScopeFactory)
-    //    {
-
-    //    }
-    //    public async Task<IList<Vehicle>> GetVehicles(DateTime startTime, DateTime endTime, int speed)
-    //    {
-
-    //        var appDbContext = GetDbContext();
-
-    //        var vehicles = await appDbContext.Vehicles.Where(a => a.Timestamp <= startTime &&
-    //                a.Timestamp >= endTime && a.Speed == speed).ToListAsync();
-
-    //        return vehicles;
-    //    }
-    //    //public async Task<List<VehicleTemperature>> GetTemperatures(DateTime targetDate)
-    //    //{
-    //    //    var appDbContext = GetDbContext();
-
-    //    //    var vehicleTemperatures = new List<VehicleTemperature>();
-
-    //    //    Console.WriteLine(targetDate.Date);
-
-    //    //    var temperatures = appDbContext.Temperatures.Where(t => t.timestamp.Date == targetDate.Date)
-    //    //        .GroupBy(t => new { t.DeviceId, t.timestamp.Hour })
-    //    //        .Select(group => new
-    //    //        {
-    //    //            deviceId = group.Key.DeviceId,
-    //    //            hour = group.Key.Hour,
-    //    //            averageTemperature = group.Average(r => r.temp)
-    //    //        })
-    //    //        .OrderBy(result => result.deviceId)
-    //    //        .ThenBy(result => result.hour)
-    //    //        .ToList();
-
-    //    //    var hourlyAveragesDict = new Dictionary<(int Id, int Hour), double>();
-
-    //    //    foreach (var result in temperatures)
-    //    //    {
-    //    //        hourlyAveragesDict[(result.deviceId, result.hour)] = result.averageTemperature;
-    //    //    }
-
-    //    //    foreach (var deviceId in temperatures.Select(t => t.deviceId).Distinct())
-    //    //    {
-    //    //        var temp = new VehicleTemperature
-    //    //        {
-    //    //            Id = deviceId,
-    //    //            Date = targetDate.Date,
-    //    //            HourlyAverages = new Dictionary<int, double>()
-    //    //        };
-
-    //    //        for (int hour = 0; hour < 24; hour++)
-    //    //        {
-    //    //            if (hourlyAveragesDict.TryGetValue((deviceId, hour), out double average))
-    //    //            {
-    //    //                temp.HourlyAverages[hour] = average;
-    //    //            }
-    //    //            else
-    //    //            {
-    //    //                temp.HourlyAverages[hour] = 0.0;
-    //    //            }
-    //    //        } 
-    //    //        vehicleTemperatures.Add(temp);
-    //    //    }
-
-    //    //    return vehicleTemperatures;
-    //    //}
-      
-    //    public async Task<VehicleTemperature> SaveVehicleTemperature(VehicleTemperature vehicleTemperature)
-    //    {
-    //        var db = GetDbContext();
-
-    //        await db.AddAsync(vehicleTemperature);
-
-    //        return vehicleTemperature;
-    //    }
-    //}
 
     public class VehicleRepository : BaseRepository, IVehicleRepository
     {
@@ -115,7 +34,7 @@ namespace P8.Repository.Repositories
         {
             var appDbContext = GetDbContext();
 
-            var vehicleTemperatures = new List<VehicleTemperature>(); 
+            var vehicleTemperatures = new List<VehicleTemperature>();
 
             var temperatures = appDbContext.Temperatures.Where(t => t.Timestamp.Date == targetDate.Date)
                 .GroupBy(t => new { t.DeviceInfoId, t.Timestamp.Hour })
@@ -155,7 +74,7 @@ namespace P8.Repository.Repositories
                     {
                         temp.HourlyAverages[hour] = 0.0;
                     }
-                } 
+                }
                 vehicleTemperatures.Add(temp);
             }
 

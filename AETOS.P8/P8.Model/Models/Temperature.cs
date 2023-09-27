@@ -17,16 +17,9 @@ namespace P8.Model.Models
     }
 
     public class DeviceInfo
-    {
-<<<<<<< HEAD
-        public int Id { get; set; } 
-        public double Longitude { get; set; }
-        public double Latitude { get; set; }
-
-=======
+    { 
         public int Id { get; set; }
         public double Longitude { get; set; }
-        public double Latitude { get; set; } 
->>>>>>> dev-angon
+        public double Latitude { get; set; }  
     }
 }
