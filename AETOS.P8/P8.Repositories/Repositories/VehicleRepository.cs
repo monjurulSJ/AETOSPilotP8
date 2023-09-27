@@ -24,8 +24,8 @@ namespace P8.Repository.Repositories
         {
             var appDbContext = GetDbContext();
 
-            var vehicles = await appDbContext.Vehicles.Where(a => a.Timestamp <= startTime &&
-                    a.Timestamp >= endTime && a.Speed == speed).ToListAsync();
+            var vehicles = await appDbContext.Vehicles.Where(a => a.Timestamp.Date >= startTime.Date &&
+                    a.Timestamp.Date <= endTime.Date && a.Speed == speed).ToListAsync();
 
             return vehicles;
         }
@@ -34,12 +34,7 @@ namespace P8.Repository.Repositories
         {
             var appDbContext = GetDbContext();
 
-            var vehicleTemperatures = new List<VehicleTemperature>();
-
-            Console.WriteLine(targetDate.Date);
-            var tests = appDbContext.Temperatures.ToList();
-
-            Console.WriteLine(tests);
+            var vehicleTemperatures = new List<VehicleTemperature>(); 
 
             var temperatures = appDbContext.Temperatures.Where(t => t.timestamp.Date == targetDate.Date)
                 .GroupBy(t => new { t.DeviceId, t.timestamp.Hour })
@@ -73,7 +68,7 @@ namespace P8.Repository.Repositories
                 {
                     if (hourlyAveragesDict.TryGetValue((deviceId, hour), out double average))
                     {
-                        temp.HourlyAverages[hour] = average;
+                        temp.HourlyAverages[hour] = Math.Round(average, 2, MidpointRounding.AwayFromZero);
                     }
                     else
                     {
