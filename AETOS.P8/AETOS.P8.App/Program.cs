@@ -1,3 +1,8 @@
+using AETOS.P8.App.Extensions;
+using Microsoft.EntityFrameworkCore;
+using P8.Model.DbContexts;
+using System.Reflection;
+
 namespace AETOS.P8.App
 {
     public class Program
@@ -6,7 +11,15 @@ namespace AETOS.P8.App
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            var assemblyName = Assembly.GetExecutingAssembly().FullName;
+
+            builder.Services.AddServices(builder.Configuration);
             // Add services to the container.
+            builder.Services.AddDbContext<AppDbContext>(options =>
+            {  
+                options.UseNpgsql(connectionString, m => m.MigrationsAssembly(assemblyName));
+            });
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -14,6 +27,8 @@ namespace AETOS.P8.App
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

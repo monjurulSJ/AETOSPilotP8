@@ -13,6 +13,5 @@ namespace P8.Repository.Repositories
         {
 
         }
-
     }
 }
