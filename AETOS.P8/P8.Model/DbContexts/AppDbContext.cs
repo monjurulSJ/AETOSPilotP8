@@ -21,6 +21,6 @@ namespace P8.Model.DbContexts
         }
         public virtual DbSet<Temperature> Temperatures { get; set; }
         public virtual DbSet<Vehicle> Vehicles { get; set; }
-        public virtual DbSet<Geo> Geos { get; set; }
+        public virtual DbSet<DeviceInfo> DeviceInfos { get; set; }
     }
 }

@@ -8,18 +8,18 @@ namespace P8.Model.Models
 {
     public class Temperature
     {
-        public int id { get; set; }
-        public int DeviceId { get; set; }
-        public int temp { get; set; }
-        public int psi { get; set; }
-        public DateTime timestamp { get; set; }
+        public int Id { get; set; }
+        public int Temp { get; set; }
+        public int Psi { get; set; }
+        public DateTime Timestamp { get; set; }
+        public int DeviceInfoId { get; set; }
+        public virtual DeviceInfo DeviceInfo { get; set; }
     }
 
-    public class Geo
+    public class DeviceInfo
     {
-        public int id { get; set; } 
-        public double longitude { get; set; }
-        public double latitude { get; set; }
-
+        public int Id { get; set; }
+        public double Longitude { get; set; }
+        public double Latitude { get; set; } 
     }
 }

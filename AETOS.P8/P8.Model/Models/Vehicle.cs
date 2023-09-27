@@ -3,7 +3,7 @@
 namespace P8.Model.Models
 {
     public class Vehicle
-    { 
+    {
         public int Id { get; set; }
         public int CompanyID { get; set; }
         public string CompanyName { get; set; }
@@ -27,6 +27,6 @@ namespace P8.Model.Models
         public string Ignition { get; set; }
         public int Reason { get; set; }
         public int GroupID { get; set; }
-        public string GroupName { get; set; } 
+        public string GroupName { get; set; }
     } 
 }

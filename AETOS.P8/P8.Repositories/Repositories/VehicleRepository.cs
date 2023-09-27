@@ -36,13 +36,13 @@ namespace P8.Repository.Repositories
 
             var vehicleTemperatures = new List<VehicleTemperature>(); 
 
-            var temperatures = appDbContext.Temperatures.Where(t => t.timestamp.Date == targetDate.Date)
-                .GroupBy(t => new { t.DeviceId, t.timestamp.Hour })
+            var temperatures = appDbContext.Temperatures.Where(t => t.Timestamp.Date == targetDate.Date)
+                .GroupBy(t => new { t.DeviceInfoId, t.Timestamp.Hour })
                 .Select(group => new
                 {
-                    deviceId = group.Key.DeviceId,
+                    deviceId = group.Key.DeviceInfoId,
                     hour = group.Key.Hour,
-                    averageTemperature = group.Average(r => r.temp)
+                    averageTemperature = group.Average(r => r.Temp)
                 })
                 .OrderBy(result => result.deviceId)
                 .ThenBy(result => result.hour)
