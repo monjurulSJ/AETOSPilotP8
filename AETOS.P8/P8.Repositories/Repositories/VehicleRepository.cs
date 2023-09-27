@@ -37,6 +37,9 @@ namespace P8.Repository.Repositories
             var vehicleTemperatures = new List<VehicleTemperature>();
 
             Console.WriteLine(targetDate.Date);
+            var tests = appDbContext.Temperatures.ToList();
+
+            Console.WriteLine(tests);
 
             var temperatures = appDbContext.Temperatures.Where(t => t.timestamp.Date == targetDate.Date)
                 .GroupBy(t => new { t.DeviceId, t.timestamp.Hour })
