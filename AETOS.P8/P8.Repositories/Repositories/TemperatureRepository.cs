@@ -7,9 +7,11 @@ namespace P8.Repository.Repositories
 {
     public interface ITemperatureRepository
     {
-
+        Task<List<VehicleTemperature>> GetTemperatures(DateTime targetDate);
         Task<List<Temperature>>  GetAllTemperatures();
         Task<DeviceInfo> GetDeviceInfoByDeviceId(int deviceId);
+        Task<List<VehicleMaxMinTemperature>> GetMaximumAndMinimumTemperature(DateTime targetDate);
+        Task<Temperature> SaveVehicleTemperature(Temperature vehicleTemperature);
     }
 
     public class TemperatureRepository : BaseRepository, ITemperatureRepository
