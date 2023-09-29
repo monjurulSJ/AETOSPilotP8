@@ -13,6 +13,7 @@ namespace P8.Model.Models
         public int Psi { get; set; }
         public DateTime Timestamp { get; set; }
         public int DeviceInfoId { get; set; }
+        public DateTime CreatedAt { get; set; } 
         public virtual DeviceInfo DeviceInfo { get; set; }
     }
 }

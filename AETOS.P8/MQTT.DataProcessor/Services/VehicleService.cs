@@ -4,13 +4,14 @@ using KAFKA.Library;
 using Microsoft.Extensions.Configuration;
 using MQTT.DataProcessor.Repositories;
 using Newtonsoft.Json;
+using P8.Model.DTO;
 using P8.Model.Models;
 
 namespace MQTT.DataProcessor.Services
 {
     public class VehicleService : ITopicService
     {
-        private Vehicle _vehiclePayload;
+        private VehicleDTO _vehiclePayload;
         private IVehicleRepository _vehicleRepository;
         private readonly KafkaProducer _kafkaProducer;
         private IConfiguration _config;
@@ -22,7 +23,7 @@ namespace MQTT.DataProcessor.Services
         }
         public ITopicService Initialize(string jsonPayload)
         {
-            _vehiclePayload = JsonConvert.DeserializeObject<Vehicle>(jsonPayload);
+            _vehiclePayload = JsonConvert.DeserializeObject<VehicleDTO>(jsonPayload);
             return this;
         }
 

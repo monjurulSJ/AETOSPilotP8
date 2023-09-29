@@ -22,7 +22,8 @@ IHostBuilder CreateHostBuilder(string[] args) =>
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             var assemblyName = Assembly.GetExecutingAssembly().FullName;
 
-         
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseNpgsql(connectionString, m => m.MigrationsAssembly(assemblyName));

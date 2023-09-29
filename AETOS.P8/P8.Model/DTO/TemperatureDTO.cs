@@ -1,4 +1,5 @@
-﻿using System;
+﻿using P8.Model.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,15 +12,12 @@ namespace P8.Model.DTO
         public Reading Reading { get; set; }
         public Geo Geo { get; set; }
     }
-    public class Reading
+    public class Reading:Temperature
     {
-        public int Id { get; set; }
-        public int Temp { get; set; }
-        public int Psi { get; set; }
-        public DateTime Timestamp { get; set; }
+       
     }
 
-    public class Geo
+    public class Geo:DeviceInfo
     {
         public double Long { get; set; }
         public double Lat { get; set; }
