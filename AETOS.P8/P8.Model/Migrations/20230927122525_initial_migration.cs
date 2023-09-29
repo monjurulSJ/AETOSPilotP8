@@ -18,8 +18,10 @@ namespace P8.Model.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    DeviceId = table.Column<int>(type: "integer", nullable: false),
                     Longitude = table.Column<double>(type: "double precision", nullable: false),
-                    Latitude = table.Column<double>(type: "double precision", nullable: false)
+                    Latitude = table.Column<double>(type: "double precision", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -54,7 +56,8 @@ namespace P8.Model.Migrations
                     Ignition = table.Column<string>(type: "text", nullable: false),
                     Reason = table.Column<int>(type: "integer", nullable: false),
                     GroupID = table.Column<int>(type: "integer", nullable: false),
-                    GroupName = table.Column<string>(type: "text", nullable: false)
+                    GroupName = table.Column<string>(type: "text", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
