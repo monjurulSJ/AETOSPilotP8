@@ -4,13 +4,14 @@ using KAFKA.Library;
 using Microsoft.Extensions.Configuration;
 using MQTT.DataProcessor.Repositories;
 using Newtonsoft.Json;
+using P8.Model.DTO;
 using P8.Model.Models;
 
 namespace MQTT.DataProcessor.Services
 {
     public class TemperatureService : ITopicService
     {
-        private Temperature _temperaturePayload;
+        private TemperatureDTO _temperaturePayload;
         private ITemperatureRepository _temperatureRepository;
         private readonly KafkaProducer _kafkaProducer;
         private IConfiguration _config;
@@ -23,7 +24,7 @@ namespace MQTT.DataProcessor.Services
         }
         public ITopicService Initialize(string jsonPayload)
         {
-            _temperaturePayload = JsonConvert.DeserializeObject<Temperature>(jsonPayload);
+            _temperaturePayload = JsonConvert.DeserializeObject<TemperatureDTO>(jsonPayload);
             return this;
         }
 
@@ -33,7 +34,7 @@ namespace MQTT.DataProcessor.Services
 
             _kafkaProducer.Setup(kAFKASettings.BootstrapServers, kAFKASettings.GroupId);
             var data = JsonConvert.SerializeObject(_temperaturePayload);
-            _kafkaProducer.Produce("temperature", "abdsfdsfd");
+            _kafkaProducer.Produce("temperature", data);
 
             return this;
         }

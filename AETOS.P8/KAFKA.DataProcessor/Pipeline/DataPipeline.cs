@@ -2,6 +2,8 @@
 using System.Text;
 using KAFKA.DataProcessor.Extentions;
 using KAFKA.DataProcessor.Services;
+using Newtonsoft.Json;
+using P8.Model.Models;
 
 namespace KAFKA.DataProcessor.Pipeline
 {
@@ -23,9 +25,9 @@ namespace KAFKA.DataProcessor.Pipeline
         {
             // Log.Information($"Processing {topic}");
 
-            _topicName = topic.GetTopicName();
-            _deviceId = topic.GetDeviceId();
-            _payload = payload;
+            _topicName = topic; //topic.GetTopicName();
+            _deviceId = topic;   //topic.GetDeviceId();
+            _payload = payload ;
 
             return this;
         }

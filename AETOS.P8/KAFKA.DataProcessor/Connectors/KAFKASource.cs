@@ -18,7 +18,7 @@ namespace KAFKA.DataProcessor.Connectors
 
         public void Subscribe(Action<Message<string, string>, string> eventHandler, CancellationToken token)
         {
-            var kAFKASettings = _config.GetSection("KAFKA").Get<KAFKASettings>(); ;
+            var kAFKASettings = _config.GetSection("KAFKA").Get<KAFKASettings>();
 
             string[] topics = kAFKASettings.Topics.Select(a => a.Name).ToArray();
 

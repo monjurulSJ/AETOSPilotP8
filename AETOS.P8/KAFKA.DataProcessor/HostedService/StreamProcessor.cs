@@ -25,10 +25,10 @@ namespace KAFKA.DataProcessor.HostedService
             {
                 _source.Subscribe((payload, topic) =>
                 {
-                    _dataPipeline.Initialize(topic, payload.ToString())
+                    _dataPipeline.Initialize(topic, payload.Value.ToString())
                         .ExtractPayload()
-                        .Transform()
-                        .Load();
+                        .Transform() //for modify
+                        .Load(); // database save
                 }, stoppingToken);
             }, stoppingToken);
         }
