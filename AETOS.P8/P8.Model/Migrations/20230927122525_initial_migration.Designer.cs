@@ -12,7 +12,7 @@ using P8.Model.DbContexts;
 namespace P8.Model.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230927120325_initial_migration")]
+    [Migration("20230927122525_initial_migration")]
     partial class initial_migration
     {
         /// <inheritdoc />
@@ -32,6 +32,12 @@ namespace P8.Model.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("DeviceId")
+                        .HasColumnType("integer");
 
                     b.Property<double>("Latitude")
                         .HasColumnType("double precision");
@@ -105,6 +111,9 @@ namespace P8.Model.Migrations
                     b.Property<string>("CompanyName")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("DriverID")
                         .HasColumnType("integer");
