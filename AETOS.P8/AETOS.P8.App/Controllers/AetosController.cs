@@ -55,5 +55,23 @@ namespace AETOS.P8.App.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet("GetMaxMinSpeedHour")]
+        public async Task<IActionResult> GetMaxMinSpeedHour(DateTime startDate,DateTime endDate )
+        {
+            try
+            {
+                var response = await _aetosService.GetMaxMinSpeedHour(startDate, endDate);
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+
+
     }
 }

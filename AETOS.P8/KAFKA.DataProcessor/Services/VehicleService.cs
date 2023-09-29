@@ -38,7 +38,7 @@ namespace KAFKA.DataProcessor.Services
         {
             _vehicle = _mapper.Map<Vehicle>(_vehicleDTO); //destination then source
             _vehicle.CreatedAt = DateTime.Now.ToUniversalTime();
-
+            _vehicle.Timestamp = _vehicleDTO.Timestamp.ToUniversalTime();
             return this;
         }
     }

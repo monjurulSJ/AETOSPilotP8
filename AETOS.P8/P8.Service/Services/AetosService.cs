@@ -14,6 +14,8 @@ namespace P8.Service.Services
         Task<IList<Vehicle>> GetVehicles(DateTime startTime, DateTime endTime, int speed);
         Task<IList<VehicleTemperature>> GetTemperatures(DateTime targetDate);
         Task<IList<VehicleMaxMinTemperature>> GetVehicleMaxMinTemperatures(DateTime targetDate);
+
+        Task<IList<VechileSpeed>> GetMaxMinSpeedHour(DateTime startDate, DateTime endDate);
     }
     public class AetosService : IAetosService
     {
@@ -42,5 +44,13 @@ namespace P8.Service.Services
 
             return temperatures;
         }
+        public async Task<IList<VechileSpeed>> GetMaxMinSpeedHour(DateTime startDate,DateTime endDate)
+        {
+            var temperatures = await _temperaturesRepository.GetMaxMinSpeedHour(startDate, endDate);
+
+            return temperatures;
+        }
+
+
     }
 }
