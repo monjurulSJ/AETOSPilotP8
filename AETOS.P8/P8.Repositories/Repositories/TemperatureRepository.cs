@@ -12,6 +12,8 @@ namespace P8.Repository.Repositories
         Task<DeviceInfo> GetDeviceInfoByDeviceId(int deviceId);
         Task<List<VehicleMaxMinTemperature>> GetMaximumAndMinimumTemperature(DateTime targetDate);
         Task<Temperature> SaveVehicleTemperature(Temperature vehicleTemperature);
+        Task<List<VechileSpeed>> GetMaxMinSpeedHour(DateTime startDate,DateTime endDate);
+        
     }
 
     public class TemperatureRepository : BaseRepository, ITemperatureRepository
@@ -118,6 +120,71 @@ namespace P8.Repository.Repositories
             DeviceInfo deviceInfo = await db.DeviceInfos.FirstOrDefaultAsync(x=>x.DeviceId==deviceId);
 
             return  deviceInfo;
-        } 
+        }
+
+        public async Task<List<VechileSpeed>> GetMaxMinSpeedHour(DateTime startDate, DateTime endDate)
+        {
+            var appDbContext = GetDbContext();
+
+            var vehicleSpeed = new List<VechileSpeed>();
+
+            var result = await appDbContext.Vehicles
+                                    .Where(t => (t.Timestamp.Date>= startDate.Date 
+                                     && t.Timestamp.Date<=endDate.Date))
+                                    .GroupBy(t => new { t.DriverID, t.Timestamp.Hour,t.Timestamp.Date })
+                                    .Select(group => new
+                                    {
+                                        date= group.Key.Date,
+                                        deviceId = group.Key.DriverID,
+                                        hour = group.Key.Hour,
+                                        maxSpeed = group.Max(r => r.Speed),
+                                        minSpeed = group.Min(r => r.Speed),
+                                    })
+                                    .OrderBy(result => result.deviceId)
+                                    .ThenBy(result => result.hour)
+                                    .ToListAsync();
+
+            var hourlyMaxDict = new Dictionary<(int Id, int Hour), double>();
+            var hourlyMinDict = new Dictionary<(int Id, int Hour), double>();
+
+            foreach (var item in result)
+            {
+                hourlyMaxDict[(item.deviceId, item.hour)] = item.maxSpeed;
+                hourlyMinDict[(item.deviceId, item.hour)] = item.minSpeed;
+
+            }
+
+            foreach (var item in result.Distinct())
+            {
+                var temp = new VechileSpeed
+                {
+                    DeviceId = item.deviceId,
+                    Date = item.date,
+                    HourlyMax = new Dictionary<int, double>(),
+                    HourlyMin = new Dictionary<int, double>(),
+                };
+
+                for (int hour = 0; hour < 24; hour++)
+                {
+                    if (hourlyMaxDict.TryGetValue((item.deviceId, hour), out double max))
+                    {
+                        temp.HourlyMax[hour] = Math.Round(max, 2, MidpointRounding.AwayFromZero);
+                    }
+                    if (hourlyMinDict.TryGetValue((item.deviceId, hour), out double min))
+                    {
+                        temp.HourlyMin[hour] = Math.Round(min, 2, MidpointRounding.AwayFromZero);
+                    }
+                    else
+                    {
+                        temp.HourlyMax[hour] = 0.0;
+                        temp.HourlyMin[hour] = 0.0;
+                    }
+                }
+                vehicleSpeed.Add(temp);
+            }
+            return vehicleSpeed;
+        }
+
+
     }
 }
