@@ -9,9 +9,9 @@ namespace P8.Repository.Repositories
 {
     public interface IVehicleRepository
     {
-        Task<IList<Vehicle>> GetVehicles(DateTime startTime, DateTime endTime, int speed);
+        Task<IList<Vehicle>> GetVehicles(DateTime startTime, DateTime endTime, int speed); 
         Task<List<VehicleTemperature>> GetTemperatures(DateTime targetDate);
-        Task<Vehicle> SaveVehicleInfo(Vehicle vehicle);
+        Task<Vehicle> SaveVehicleInfo(Vehicle vehicle); 
     }
 
     public class VehicleRepository : BaseRepository, IVehicleRepository
@@ -26,10 +26,10 @@ namespace P8.Repository.Repositories
             var appDbContext = GetDbContext();
 
             var vehicles = await appDbContext.Vehicles.Where(a => a.Timestamp.Date >= startTime.Date &&
-                    a.Timestamp.Date <= endTime.Date && a.Speed == speed).ToListAsync();
+                    a.Timestamp.Date <= endTime.Date && a.Speed > speed).ToListAsync();
 
-            return vehicles;
-        }
+            return vehicles; 
+        }  
 
         public async Task<List<VehicleTemperature>> GetTemperatures(DateTime targetDate)
         {
@@ -97,8 +97,6 @@ namespace P8.Repository.Repositories
 
                 throw ex;
             }
-        }
-
-
+        } 
     }
 }

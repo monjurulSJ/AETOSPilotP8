@@ -41,5 +41,19 @@ namespace AETOS.P8.App.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet("GetMaxMinTemperature")]
+        public async Task<IActionResult> GetMaximumAndMinimumTemperatures(DateTime targetDate)
+        {
+            try
+            {
+                var response = await _aetosService.GetVehicleMaxMinTemperatures(targetDate);
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

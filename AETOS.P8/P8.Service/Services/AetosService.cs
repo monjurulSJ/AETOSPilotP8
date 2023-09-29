@@ -13,12 +13,15 @@ namespace P8.Service.Services
     {
         Task<IList<Vehicle>> GetVehicles(DateTime startTime, DateTime endTime, int speed);
         Task<IList<VehicleTemperature>> GetTemperatures(DateTime targetDate);
+        Task<IList<VehicleMaxMinTemperature>> GetVehicleMaxMinTemperatures(DateTime targetDate);
     }
     public class AetosService : IAetosService
     {
         private readonly IVehicleRepository _vehicleRepository;
-        public AetosService(IVehicleRepository vehicleRepository)
+        private readonly ITemperatureRepository _temperaturesRepository;
+        public AetosService(IVehicleRepository vehicleRepository, ITemperatureRepository temperatureRepository)
         {
+            _temperaturesRepository = temperatureRepository;
             _vehicleRepository = vehicleRepository;
         } 
         public async Task<IList<Vehicle>> GetVehicles(DateTime startTime, DateTime endTime, int speed)
@@ -29,7 +32,13 @@ namespace P8.Service.Services
         } 
         public async Task<IList<VehicleTemperature>> GetTemperatures(DateTime targetDate)
         {
-            var temperatures = await _vehicleRepository.GetTemperatures(targetDate);
+            var temperatures = await _temperaturesRepository.GetTemperatures(targetDate);
+
+            return temperatures;
+        }
+        public async Task<IList<VehicleMaxMinTemperature>> GetVehicleMaxMinTemperatures(DateTime targetDate)
+        {
+            var temperatures = await _temperaturesRepository.GetMaximumAndMinimumTemperature(targetDate);
 
             return temperatures;
         }
