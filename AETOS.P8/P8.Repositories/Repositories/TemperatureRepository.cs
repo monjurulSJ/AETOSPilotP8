@@ -10,7 +10,8 @@ namespace P8.Repository.Repositories
     {
         Task<Temperature> SaveVehicleTemperature(Temperature vehicleTemperature);
 
-        Task<List<Temperature>> GetAllTemperatures();
+        Task<List<Temperature>>  GetAllTemperatures();
+        Task<DeviceInfo> GetDeviceInfoByDeviceId(int deviceId);
     }
 
     public class TemperatureRepository : BaseRepository, ITemperatureRepository
@@ -21,11 +22,20 @@ namespace P8.Repository.Repositories
         }
         public async Task<Temperature> SaveVehicleTemperature(Temperature vehicleTemperature)
         {
-            var db = GetDbContext();
+            try
+            {
+               var db = GetDbContext();
+               await  db.AddAsync(vehicleTemperature);
 
-            await db.AddAsync(vehicleTemperature);
+               await db.SaveChangesAsync();
+          
+               return vehicleTemperature;
+            }
+            catch (Exception ex)
+            {
 
-            return vehicleTemperature;
+                throw ex;
+            }
         }
         public async Task<List<Temperature>> GetAllTemperatures()
         {
@@ -34,5 +44,15 @@ namespace P8.Repository.Repositories
 
              return await data;
         }
+        public async Task<DeviceInfo> GetDeviceInfoByDeviceId(int deviceId)
+        {
+            var db = GetDbContext();
+
+            DeviceInfo deviceInfo =await db.DeviceInfos.FirstOrDefaultAsync(x=>x.DeviceId==deviceId);
+
+            return  deviceInfo;
+        }
+
+
     }
 }

@@ -11,6 +11,7 @@ namespace P8.Repository.Repositories
     {
         Task<IList<Vehicle>> GetVehicles(DateTime startTime, DateTime endTime, int speed);
         Task<List<VehicleTemperature>> GetTemperatures(DateTime targetDate);
+        Task<Vehicle> SaveVehicleInfo(Vehicle vehicle);
     }
 
     public class VehicleRepository : BaseRepository, IVehicleRepository
@@ -80,5 +81,24 @@ namespace P8.Repository.Repositories
 
             return vehicleTemperatures;
         }
+        public async Task<Vehicle> SaveVehicleInfo(Vehicle vehicle)
+        {
+            try
+            {
+                var db = GetDbContext();
+                await db.AddAsync(vehicle);
+
+                await db.SaveChangesAsync();
+
+                return vehicle;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
     }
 }
