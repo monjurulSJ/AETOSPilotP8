@@ -5,6 +5,7 @@ using MQTT.DataProcessor.Pipeline;
 using MQTT.DataProcessor.Repositories;
 using MQTT.DataProcessor.Services;
 using MQTT.Library;
+using System;
 
 namespace MQTT.DataProcessor.Extentions
 {
@@ -23,8 +24,33 @@ namespace MQTT.DataProcessor.Extentions
                     .AddTransient<IExtractService, ExtractPayload>()
 
                     .AddTransient<ITemperatureRepository, TemperatureRepository>()
+
                     .AddTransient<IVehicleRepository, VehicleRepository>()
+                    
+                    .AddTransient<Func<string, ITopicService>>(serviceProvider => key =>
+                    {
+                        return key switch
+                        {
+                            "temperature" => serviceProvider.GetRequiredService<TemperatureService>(),
+                            "vehicle" => serviceProvider.GetRequiredService<VehicleService>(),
+                            _ => throw new NotImplementedException()
+                        };
+                    })
+
+                     //.AddTransient<Func<string, ITopicService>>(serviceProvider => key =>HandleServiceResolver(serviceProvider,key))
+
                     ;
         }
+
+        //private static ITopicService HandleServiceResolver(IServiceProvider serviceProvider, string key)
+        //{
+        //    return key switch
+        //    {
+        //        "temperature" => serviceProvider.GetRequiredService<TemperatureService>(),
+        //        "vehicle" => serviceProvider.GetRequiredService<VehicleService>(),
+        //        _ => throw new NotImplementedException()
+        //    };
+        //}
     }
+
 }

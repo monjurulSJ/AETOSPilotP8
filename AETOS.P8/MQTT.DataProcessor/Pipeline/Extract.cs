@@ -14,11 +14,12 @@ namespace MQTT.DataProcessor.Pipeline
     public class ExtractPayload : IExtractService
     {
         private readonly ITopicFactory _topicFactory;
-
+        Func<string, ITopicService> _topicWiseServiceResolver;
         public ExtractPayload(
-            ITopicFactory topicFactory)
+            ITopicFactory topicFactory, Func<string, ITopicService> topicWiseServiceResolver)
         {
             _topicFactory = topicFactory;
+            _topicWiseServiceResolver = topicWiseServiceResolver;
         }
 
         public ITopicService ExtractPayloads(string topicName, string deviceId, string payload)
@@ -28,7 +29,10 @@ namespace MQTT.DataProcessor.Pipeline
             //{
             // throw new TopicProcessingException(deviceId, payload, ExceptionReason.NotProcess, null);
             //}
+            var vehicleService=_topicWiseServiceResolver("vehicle");
+            var temperatureService=_topicWiseServiceResolver("temperature");
 
+            //return _topicWiseServiceResolver(topicName).Initialize(payload);
 
             return _topicFactory.CreateTopic(topicName).Initialize(payload);
         }

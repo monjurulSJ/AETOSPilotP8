@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P8.Repository", "P8.Reposit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P8.Model", "P8.Model\P8.Model.csproj", "{58C2D421-FB94-46E8-985F-D0A268388349}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P8.Service", "P8.Service\P8.Service.csproj", "{D908E9BC-2B17-4C11-8C4E-2BCE4A3FD2CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P8.Service", "P8.Service\P8.Service.csproj", "{D908E9BC-2B17-4C11-8C4E-2BCE4A3FD2CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
